@@ -1,0 +1,47 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h3>Products</h3>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">                
+                    
+                </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <div class="card">
+        <div class="header text-center">
+            <h2><strong>Product</strong> Mangement</h2>
+           
+          </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="body product_item">
+                            <img src="/images/ecommerce/main_shoef-removebg-preview.png" alt="Product" class="img-fluid cp_img" />
+                            <div class="product_details">
+                                <a href="#">Simple Black Clock</a>
+                                <ul class="product_price list-unstyled">
+                                    <li class="old_price">3500 Rs</li>
+                                    <li class="new_price">4100 Rs</li>
+                                </ul>                                
+                            </div>
+                            <div class="action">
+                                <a href="/admin/edit-product/id" class="btn btn-info waves-effect">Edit</a>
+                                <a href="/admin/edit-product/id" class="btn btn-primary waves-effect">Delete</a>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        </div>
+     
+    </div>
+</section>
+<%-include('../layout/adminLayout2')%>

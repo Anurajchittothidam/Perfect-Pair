@@ -1,0 +1,93 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Subcategories</h2>
+                    <ul class="breadcrumb">
+    
+                        <li class="breadcrumb-item active">Subcategories</li>
+                    </ul>
+                </div>
+                <div class="card  text-center">
+                    <div class="header">
+                      <h2><strong>subCategory</strong> Mangement</h2>
+                    </div>
+                  </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-between  pt-3">
+                <form action="/admin/addSubCategory" method="post">
+                   <div class="d-flex">
+                    <input type="text" class="form-control mt-1"   name="name" placeholder="Add new subcategory">
+                    <button type="submit" onclick="form_submit()" style="width: 5rem;" class="btn btn-primary btn-block mb-3">Submit</button>
+                   </div>
+                </div>
+                </form>
+              
+        <% if (message){%>
+            <div class="alert alert-warning" role="alert"><%= message %>
+            </div>
+        <%}%>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">sl.No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% subCategories.forEach (subCategories=>{%>
+                            
+                            <div id="<%=subCategories._id%>" class=""></div>
+                            <tr>
+                                <th scope="row"><%= index += 1 %>
+        
+        
+                                </th>
+                                <td ><%=subCategories.subCategory_name%> </td>
+                                <td><form action="/admin/editSubCategory/<%=subCategories._id%>" onsubmit="return submit(event)" method="post">
+                                    <div class="d-flex">
+                                    <input placeholder="Edit subCategory name" name="name" type="text" id="subcategory" class="form-control w-50"  required>                     
+                                    <button type="submit" onclick="form_submit()" class="btn btn-success">Submit</button>
+                                    </div>
+                                  </form></td>
+                                <td>
+                                    <% if(subCategories.delete===false){%>
+                                        <form action="/admin/deleteSubCategory/<%=subCategories._id%>" onsubmit="return submit(event)" method="post">
+                                        <button  type="submit" onclick="return deletesubCategory('<%=subCategories._id%>'),form_submit()" class="btn m-1 btn-danger" >Delete</button></form>
+                                    <%}else{%>
+                                        <form action="/admin/restoreSubCategory/<%=subCategories._id%>" onsubmit="return submit(event)"  method="post">
+                                        <button  type="submit" onclick="form_submit()" class="btn m-1 btn-success" >Restore</button></form>
+                                    <%}%>
+                                    
+                                </td>
+                            </tr>
+                        <%}); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function form_submit() {
+      document.querySelector("form").submit();
+    }
+  </script>
+  <script>
+    function deletesubCategory(id){
+        if(confirm('Are you shure do you want to delete this subCategory')){
+            return true;
+        }else{
+            return false
+        }
+    }
+  </script>
+  <%-include('../layout/adminLayout2')%>

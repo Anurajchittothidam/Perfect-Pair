@@ -1,0 +1,151 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Orders</h2>
+                    <ul class="breadcrumb">
+    
+                        <li class="breadcrumb-item active">Orders</li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">                
+                    
+                </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <!-- table order  -->
+          <div class="row clearfix">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="card">
+                <div class="header">
+                  <h2><strong>Recent</strong> Orders</h2>
+                 
+                </div>
+               <div class="table-responsive">
+                  <table class="table table-hover c_table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Customer name</th>
+                        <th scope="col">Order date</th>
+                        <th scope="col">Payment method</th>
+                        <th scope="col">Payment status</th>
+                        <th scope="col">Order status</th>
+                        <th scope="col">Delivery  date</th>
+                        <th scope="col">Total amount</th>
+                        <th scope="col">Order controlls</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% orders.forEach(order=>{%>
+                       
+                        <tr>
+                          <td>
+                            <%=order.name%>
+                          </td>
+                          <td><%=order.orderDate%></td>
+                          <td><%=order.paymentMethod%></td>
+                          <% if(order.paymentStatus==='not Paid'){%>
+                            <td class="badge badge-warning p-2 m-3" style="width:80px;">
+                              <%=order.paymentStatus%>
+                            </td>
+                          <%}else{%>
+                            <td class="badge badge-success p-2 m-3" style="width: 80px;">
+                              <%=order.paymentStatus%>
+                            </td>
+                          <%}%>
+                          <td>
+                            <%=order.orderStatus%>
+                          </td>
+                          <td><%=order.deliveryDate%></td>
+                          <td><%=order.totalAmount%></td>
+                          <td><a href="/admin/orderDetailed/<%=order._id%>"><button type="button" class="btn btn-success">View</button></a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModal-<%= order._id %>">Edit</button></td>
+                        
+                             
+                            <div
+                            class="modal fade"
+                            id="exampleModal-<%= order._id %>"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Edit orders</h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="/admin/orderStatusChange/<%= order._id %>" id="form" method="post">
+                                    <div class="mb-3">
+                                      <label for="recipient-name" name="orderStatus"
+                                      class="col-form-label"> Order Status</label>
+                                  <select class="form-control" name="orderStatus" aria-label="Default select example" id="">
+                                      
+                                      <option selected><%= order.orderStatus %></option>
+                                      <option value="pending" name="orderStatus">Pending</option>
+                                      <option value="shipped" name="orderStatus">Shipped</option>
+                                      <option value="out for Delivery" name="orderStatus">Out For Delivery</option>
+                                      <option value="delivered" name="orderStatus">Delivered</option>
+                                      <option value="cancelled" name="orderStatus">Cancel</option>
+                                     
+                                  </select>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="message-text" name="paymentStatus"class="col-form-label">Payment status</label>
+                                      <select  name="paymentStatus" class="form-control" id="">
+                                          
+                                          <option selected><%= order.paymentStatus %></option>
+                                         <% if(order.paymentStatus==='not Paid'){%>
+                                          <option hidden value="not Paid" name="paymentStatus">not Paid</option>
+                                         <%}else{%>
+                                          <option value="not Paid" name="paymentStatus">not Paid</option>
+                                         <%}%>
+                                         <% if(order.paymentStatus==='paid'){%>
+                                          <option hidden value="paid" name="paymentStatus">paid</option>
+                                         <%}else{%>
+                                          <option value="paid" name="paymentStatus">paid</option>
+                                         <%}%>
+                                         
+                                      </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button type="submit" class="btn btn-success">Save Changes</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </tr>
+                     
+                      <%})%>
+                     
+                    </tbody>
+                  </table>
+                </div> 
+              </div>
+            </div>
+          </div>
+</section>
+<%-include('../layout/adminLayout2')%>

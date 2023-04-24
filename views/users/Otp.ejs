@@ -1,0 +1,193 @@
+<%-include('../layout/userLayout')%> <%-include('../partials/userHeader')%>
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Verify OTP</h1>
+        <nav class="d-flex align-items-center">
+          <a href="/dashboard">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="/">Login</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-lg-6">
+        <div class="login_box_img">
+          <img class="img-fluid" src="img/login.jpg" alt="" />
+          <div class="hover">
+            <h4>Already have an Account</h4>
+            <p>
+              There are advances being made in science and technology everyday,
+              and a good example of this is the
+            </p>
+            <a class="primary-btn" href="/">Login</a>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-lg-6">
+        <div class="login_form_inner">
+          <h3>Verify OTP</h3>
+          <% if (error){%>
+          <div class="alert alert-warning" role="alert"><%= error %></div>
+          <%}%>
+          <form
+            class="row login_form"
+            action="/verifyOTP"
+            method="post"
+            id="contactForm"
+            novalidate="novalidate"
+          >
+            <div class="text-center" id="timeshower">
+              <span style="color: red;" id="countdown"></span>
+            </div>
+            <div class="col-md-12 form-group">
+              <input
+                type="hidden"
+                class="form-control"
+                id="name"
+                name="name"
+                value="<%=userInfo.name%>"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                value="<%=userInfo.email%>"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <input
+                type="hidden"
+                class="form-control"
+                id="phoneNumber"
+                name="phoneNumber"
+                value="<%=userInfo.phoneNumber%>"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <input
+                type="hidden"
+                class="form-control"
+                id="password"
+                name="password"
+                value="<%=userInfo.password%>"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <input
+                type="Otp"
+                class="form-control"
+                id="Otp"
+                name="Otp"
+                placeholder="Enter the OTP "
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <button type="submit" value="submit" class="primary-btn">
+                Submit
+              </button>
+            </div>
+          </form>
+          <form class="pt-0" id="signup" action="/resendOtp" method="post">
+            <div class="form-group form-input p-0">
+              <input
+                type="hidden"
+                name="name"
+                id="name"
+                value="<%= userInfo.name %>"
+                required
+              />
+            </div>
+            <div class="form-group form-input p-0">
+              <input
+                type="hidden"
+                name="email"
+                id="email"
+                value="<%= userInfo.email %>"
+                required disabled
+              />
+              <!-- <label for="email" class="form-label">Your email</label> -->
+            </div>
+            <div class="form-group form-input p-0">
+              <input
+                type="hidden"
+                name="phoneNumber"
+                id="phonenumber"
+                value="<%= userInfo.phoneNumber %>"
+                required
+              />
+            </div>
+            <div class="form-group form-input p-0">
+              <input
+                type="hidden"
+                name="password"
+                id="fpassword"
+                value="<%= userInfo.password %>"
+                required
+              />
+              <!-- <label for="fpassword" class="form-label">Password</label> -->
+            </div>
+            <div class="form-submit mt-3">
+              <input
+                type="submit"
+                value="Resend"
+                class="btn btn-lg btn-danger"
+                id="submit"
+                name="submit"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--================End Login Box Area =================-->
+<script>
+	
+	let countDownDate =new
+              Date("<%=userInfo.expiresAt%>").getTime()
+			//   .toLocaleTimeString([], { hour: 'numeric',
+            //   minute: 'numeric',second:'numeric' })
+		//  new Date().getTime() + 300000; // Set the countdown time to 5 minutes from now
+
+let x = setInterval(function () {
+  // Get the current time
+  let now = new Date(Date.now()).getTime();
+
+  // Calculate the distance between now and the countdown time
+  let distance = countDownDate - now;
+
+  // Calculate minutes and seconds
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Output the result in an element with id="countdown"
+  document.getElementById("countdown").innerHTML =
+	"OTP will be expired in:"+minutes + "m " + seconds + "s ";
+
+  // If the countdown is finished, stop the timer and display a message
+  if (distance < 0) {
+	clearInterval(x);
+	document.getElementById("countdown").innerHTML = "EXPIRED";
+  }
+}, 1000);
+	
+ 
+</script>
+
+<%-include('../partials/userFooter')%> <%-include('../layout/userLayout2')%>

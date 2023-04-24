@@ -1,0 +1,260 @@
+<%-include('../layout/adminLayout')%> <%-include('../partials/admin-sidebar')%>
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+  <div class="loader">
+    <div class="m-t-30">
+      <img
+        class="zmdi-hc-spin"
+        src="/images/loader.svg"
+        width="48"
+        height="48"
+        alt="Aero"
+      />
+    </div>
+    <p>Please wait...</p>
+  </div>
+</div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Main Content -->
+<section class="content">
+  <div class="body_scroll">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <button class="btn btn-primary btn-icon mobile_menu" type="button">
+          <i class="zmdi zmdi-sort-amount-desc"></i>
+        </button>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row clearfix">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Total Orders</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="allOrders" class="mb-0"><%=allOrders%></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Active Users</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="active" class="mb-0"><%=activeUsers%></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Number Products</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="products" class="mb-0"><%=products%></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Total Revenue</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="total" class="mb-0">₹ <%=totalRevenue %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Monthly Revenue</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="monthly" class="mb-0">₹ <%=monthlyRevenue %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-center">
+          <div class="card">
+            <div class="body">
+              <p>Today's Revenue</p>
+              <div class="d-flex bd-highlight text-center mt-4">
+                <div class="flex-fill bd-highlight">
+                  <h5 id="today" class="mb-0">₹ <%=todayRevenue %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="shadow rounded bg-white" style="height: 90px; width: 244px">
+        <h6 class="text-info text-center pt-2">Pending orders</h6>
+        <h4 class="text-dark text-center" id="pending"><%= pending %></h4>
+      </div>
+
+      <div class="shadow rounded bg-white" style="height: 90px; width: 244px">
+        <h6 class="text-info text-center pt-2">Shippped orders</h6>
+        <h4 class="text-dark text-center" id="shipped"><%= shipped %></h4>
+      </div>
+
+      <div class="shadow rounded bg-white" style="height: 90px; width: 244px">
+        <h6 class="text-info text-center pt-2">Delivered Orders</h6>
+        <h4 class="text-dark text-center" id="delivered"><%= delivered %></h4>
+      </div>
+
+      <div class="shadow rounded bg-white" style="height: 90px; width: 244px">
+        <h6 class="text-info text-center pt-2">Cancelled orders</h6>
+        <h4 class="text-dark text-center" id="cancelled"><%= cancelled %></h4>
+      </div>
+    </div>
+
+    <input type="hidden" value="<%= online %>" id="online" />
+    <input type="hidden" value="<%= cod %>" id="cod" />
+
+    <div class="mt-5">
+      <div class="row">
+        <div class="col-xl-6 col-12">
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="col-xl-6 col-12">
+          <canvas id="salse-revenue"></canvas>
+        </div>
+      </div>
+      <div class="col-12">
+        <canvas id="revenue-chart"></canvas>
+      </div>
+    </div>
+    <!-- table order  -->
+    <div class="row clearfix">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header d-flex justify-content-between">
+            <h2><strong>Recent</strong> Orders</h2>
+            <a href="/admin/salesReport"
+              ><button class="btn btn-primary btn-lg">Sales Report</button></a
+            >
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover c_table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Customer name</th>
+                  <th scope="col">Order date</th>
+                  <th scope="col">Payment method</th>
+                  <th scope="col">Payment status</th>
+                  <th scope="col">Order status</th>
+                  <th scope="col">Delivery date</th>
+                  <th scope="col">Total amount</th>
+                  <th scope="col">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% orders.forEach(order=>{%>
+
+                <tr>
+                  <td><%=a+=1%></td>
+                  <td><%=order.name%></td>
+                  <td><%=order.orderDate%></td>
+                  <td><%=order.paymentMethod%></td>
+                  <% if(order.paymentStatus==='not Paid'){%>
+                  <td class="badge badge-warning p-2 m-3" style="width: 80px">
+                    <%=order.paymentStatus%>
+                  </td>
+                  <%}else{%>
+                  <td class="badge badge-success p-2 m-3" style="width: 80px">
+                    <%=order.paymentStatus%>
+                  </td>
+                  <%}%>
+                  <td><%=order.orderStatus%></td>
+                  <td><%=order.deliveryDate%></td>
+                  <td><%=order.totalAmount%></td>
+                  <td>
+                    <a href="/admin/orderDetailed/<%=order._id%>"
+                      ><button type="button" class="btn btn-success">
+                        View
+                      </button></a
+                    >
+                    <% }) %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%-include('../layout/adminLayout2')%>
+<script
+  type="text/javascript"
+  src="https://html2canvas.hertzen.com/dist/html2canvas.js"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+<script>
+  let pending = document.getElementById("pending").innerHTML;
+  let shipped = document.getElementById("shipped").innerHTML;
+  let delivered = document.getElementById("delivered").innerHTML;
+  let cancelled = document.getElementById("cancelled").innerHTML;
+
+  const myChart5 = new Chart("myChart", {
+    type: "bar",
+    data: {
+      labels: ["Pending", "Shipped", "Delivered", "cancelled"],
+      datasets: [
+        {
+          backgroundColor: ["#5f3307", "#0B6464", "#264d00", "#DFFF00"],
+          data: [pending, shipped, delivered, cancelled],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+    },
+  });
+
+  let cod = document.getElementById("cod").value;
+  let online = document.getElementById("online").value;
+  const myChart6 = new Chart("salse-revenue", {
+    type: "bar",
+    data: {
+      labels: ["COD", "Online"],
+      datasets: [
+        {
+          backgroundColor: ["#0B6464", "#515454"],
+          data: [cod, online],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+    },
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

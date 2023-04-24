@@ -1,0 +1,227 @@
+<%-include('../layout/adminLayout')%> <%-include('../partials/admin-sidebar')%>
+<section class="content">
+  <div class="body_scroll">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <h2>Add Product</h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12"></div>
+        <button class="btn btn-primary btn-icon mobile_menu" type="button">
+          <i class="zmdi zmdi-sort-amount-desc"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="d-flex justify-content-center fw-bold mb-5">Add Product</h2>
+        <div id="error">
+          <% if (error){%>
+           <div  class="alert alert-danger d-flex justify-content-between align-items-center" role="alert"> <%= error %> 
+          <div class="close text-dark fs-5" style="cursor: pointer;" onclick="hideErrorMsg()">X</div>
+          </div>
+          <% } %>
+        </div>
+        <form
+          id="form"
+          action="/admin/addProduct"
+          method="post"
+          onsubmit="return submitform(event)"
+          enctype="multipart/form-data"
+        >
+          <!-- 2 column grid layout with text inputs for the first and last names -->
+          <p id="alert" class="text-danger d-flex justify-content-center"></p>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            
+            <input
+              class="form-control"
+              placeholder="main_image"
+              accept="image/png,image/jpg,image/jpeg"
+              type="file"
+              id="imagevalidator"
+              name="myFiles"
+              multiple
+            />
+          </div>
+
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <label for="product_name">Product Name</label>
+            <input
+              type="text"
+              placeholder="Product name"
+              name="product_name"
+              id="product_name"
+              class="form-control"
+            />
+          </div>
+         <div class="d-flex"> <div class="form-outline flex-fill mb-0 mt-4">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            placeholder="Price"
+            name="price"
+            id="price"
+            class="form-control"
+          />
+        </div>
+        <div class="form-outline flex-fill mb-0 mt-4 ml-2">
+          <label for="brand">Brand Name</label>
+          <input
+            type="text"
+            placeholder="brandName"
+            name="brand"
+            id="brand"
+            class="form-control"
+          />
+        </div></div>
+
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <label for="description">Description</label>
+            <input
+              type="text"
+              placeholder="Description"
+              name="description"
+              id="description"
+              class="form-control"
+            />
+          </div>
+          
+          <div class="d-flex ">
+            <div class="form-outline flex-fill mb-0 mt-4">
+              <label for="stock">Stock</label>
+              <input
+                type="number"
+                placeholder="Stock"
+                name="stock"
+                id="stock"
+                class="form-control"
+              />
+            </div>
+            <div class="form-outline flex-fill mb-0 mt-4 ml-2">
+              <label for="size">Size</label>
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Size"
+                id="size"
+                name="size"
+              />
+            </div>
+          </div>
+<div class="d-flex">
+  <div class="form-outline flex-fill mb-0 mt-4">
+    <select
+      class="form-select required btn btn-light "
+      name="category"
+      id="category-select"
+      aria-label="Default select example"
+    >
+      <option selectedvalue="">Category</option>
+      <% category.forEach((categories)=> {%>
+      <option value="<%=categories._id%>">
+        <%=categories.category_name%>
+      </option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="form-outline flex-fill mb-0 mt-4">
+    <select
+      class="form-select btn btn-light required"
+      name="subCategory"
+      id="subCategory-select"
+    ><option value="">subCategories</option></select>
+  </div>
+ 
+</div>
+          
+
+          <div class="row p-2 mt-2 mb-2">
+            <div class="col-md-12 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success sub-btn btn-lg">
+                Add Product
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/javascript/addProduct.js">
+
+</script>
+<script>
+  $("#menu-btn").click(function () {
+    $("#menu").toggleClass("active");
+  });
+</script>
+<script type="text/javascript">
+  function form_submit() {
+    document.querySelector("form").submit();
+  }
+</script>
+<script>
+  document
+    .querySelector("#category-select")
+    .addEventListener("change", function () {
+      const selectedCategory = this.value;
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          category: selectedCategory,
+        }),
+      };
+      fetch("/admin/getSubCategories", requestOptions)
+        .then((res) => res.json())
+        .then((subcategories) => {
+          let subcategoryList = document.querySelector("#subCategory-select");
+          subcategoryList.innerHTML = "";
+          subcategories.forEach((subcategory) => {
+            const option = document.createElement("option");
+            option.value = subcategory._id;
+            option.textContent = subcategory.subCategory_name;
+            subcategoryList.appendChild(option);
+          });
+        })
+        .catch((err) => {
+          console.log("subcategory managment error");
+        });
+    });
+</script>
+<script>
+  document.querySelector("#imagevalidator").addEventListener("change", function () {
+    let fileCount = 0;
+    let maxFiles = 3;
+        // Loop through the selected files and check their types
+        for (let i = 0; i < this.files.length; i++) {
+            let fileType = this.files[i].type;
+            if (fileType != "image/jpeg" && fileType != "image/jpg" && fileType != "image/png" && fileType != "image/webp") {
+                this.value = "";
+                Swal.fire({
+                    title: "Invalid Fileformat",
+                    icon: "error",
+                    confirmButtonText: "continue"
+                });
+                return;
+            }
+            // Increment the file count if the file is an image
+            fileCount++;
+            // Check if the maximum number of files has been reached
+        }
+        if (fileCount != 3) {
+                this.value = "";
+                Swal.fire({
+                    title: "You should upload 3 images",
+                    icon: "error",
+                    confirmButtonText: "continue"
+                })
+                return;
+            }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%-include('../layout/adminLayout2')%>

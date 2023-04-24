@@ -1,0 +1,58 @@
+<%-include('../layout/adminLayout')%>
+<div class="authentication">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <div class="body">
+                    <div id="error">
+                        <% if (error){%>
+                         <div  class="alert alert-danger d-flex justify-content-between" role="alert"> <%= error %> 
+                        <div class="close text-dark fs-5" style="cursor: pointer;" onclick="hideErrorMsg()">X</div>
+                        </div>
+                        <% } %>
+                      </div>
+                      <div class="card auth_form">
+                        <form action="/admin/login" method="POST" id="form" onsubmit="return submitform(event)">
+                            <div class="header">
+                                <img class="logo" src="/images/logo shoe.png" alt="">
+                                <h5>Admin Log in</h5>
+                            </div>
+                                <div class="input-group mb-3">
+                                    <input type="username" class="form-control" id="username" name="username" placeholder="Username">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                    <div class="input-group-append">                                
+                                        <span class="input-group-text"><i class="zmdi zmdi-lock"></i></a></span>
+                                    </div>                            
+                                </div>
+                                 <div class="checkbox">
+                                    <input id="showpassword" type="checkbox">
+                                    <label for="showpassword">Show Password</label>
+                                </div> 
+                                   
+                                <button type="submit" class="btn btn-primary btn-block  text-white" >SIGN IN</button>                                           
+                        </form>
+                      </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+                <div class="card">
+                    <img src="/images/signin.svg" alt="Sign In"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/javascript/adminloginValidation.js"></script>
+
+  <script type="text/javascript">
+    function form_submit() {
+      document.querySelector("form").submit();
+    }
+  </script>
+<%-include('../layout/adminLayout2')%>

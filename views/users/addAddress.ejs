@@ -1,0 +1,286 @@
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+  <!-- Start Banner Area -->
+  <section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Addresses</h1>
+                
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+
+      <section class="cart_area">
+        <div class="container">
+            <div class="container">
+                <div class="row justify-content-between pt-3">
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-lg btn-block mb-3"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      Add New Address
+                    </button>
+                  </div>
+                  <!-- Modal starting -->
+            
+                  <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form class="row contact_form" action="/addAddress" method="post" novalidate="novalidate">
+                            <div class="col-md-6 form-group p_star pt-2">
+                                <label for="fullname" class="text-dark">Full Name</label>
+                                <input type="text" class="form-control border shadow" id="first" name="fullname"  placeholder="Full Name">
+                            </div>
+                           
+                            <div class="col-md-6 form-group p_star pt-2">
+                                <label for="phoneNumber" class="text-dark">Phone Number</label>
+                                <input type="text" class="form-control border shadow" id="number" name="phoneNumber"  placeholder="Phone Number">
+                            
+                            </div>
+                            
+                            <div class="col-md-6 form-group p_star pt-3">
+                                <select class="state_select border shadow" name="state">
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="TamilNadu">TamilNadu</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group p_star pt-3">
+                                <select class="district_select border shadow" name="district">
+                                    <option value="Wayanad">Wayanad</option>
+                                    <option value="Kannur">Kannur</option>
+                                    <option value="Kozhikode">Kozhikode</option>
+                                    <option value="Malappuram">Malappuram</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group p_star pt-3">
+                                <label for="city" class="text-dark">Town/City</label>
+                                <input type="text" class="form-control border shadow" id="city" name="city"  placeholder="City/Town">
+                            </div>
+                            <div class="col-md-6 form-group pt-3">
+                                <label for="pincode" class="text-dark">Pincode/ZIP</label>
+                                <input type="text" class="form-control border shadow" id="pincode" name="pincode" placeholder="Pincode/ZIP">
+                            </div>
+                            <div class="col-md-12 form-group p_star pt-3">
+                                <label for="housename" class="text-dark">Full Address</label>
+                                <input type="text" class="form-control border shadow" id="houseName" name="houseName" placeholder="Full Address">
+                            </div>
+                            <div class="col-md-12 form-group p_star pt-3">
+                                <label for="title" class="text-dark fs-5">Title for the Address</label>
+                                <input type="text" class="form-control border shadow" placeholder="eg.Home" id="title" name="title">
+                               
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                              <button type="submit" class="btn btn-success ">Submit</button>
+                            </div>
+                        </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <div class="cart_inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Addresses</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                                  <% addresses.forEach(addressDetail=>{%>
+                                        <tr class="table-container">
+                                          <td class="d-flex">
+                                              <!-- <div class="media">
+                                                <label for="">
+                                                  <input type="radio" name="addressId" class="addressDetailId" value="<%=addressDetail._id%>">
+                                                </label>
+                                              </a>
+                                              </div> -->
+                                          
+                                              <ul class="pl-2">
+                                                  <li><h6 class="text-secondary"><%=addressDetail.fullName%><span class="text-dark border bg-light ml-2"> <%=addressDetail.title%></span></h6></li>
+                                                  <li><p  style="font-size:15px; overflow-wrap: break-word;"><%=addressDetail.houseName%>,<%=addressDetail.city%>,<%=addressDetail.district%>,<%=addressDetail.state%>,<%=addressDetail.pincode%></p></li>
+                                                  <li><p><%=addressDetail.phoneNumber%></p></li>
+                                              </ul>
+                                          </td>
+                                          <td><button class="btn btn-primary "  data-toggle="modal"
+                                            data-target="#editAddress<%=addressDetail._id%>" >Edit Address</button></td>
+                                            
+                                              <div
+                                              class="modal fade "
+                                              id="editAddress<%=addressDetail._id%>"
+                                              tabindex="-1"
+                                              role="dialog"
+                                              aria-labelledby="editAddress<%=addressDetail._id%>Label"
+                                              aria-hidden="true"
+                                            >
+                                              <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                                                    <button
+                                                      type="button"
+                                                      class="close"
+                                                      data-dismiss="modal"
+                                                      aria-label="Close"
+                                                    >
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <form class="row contact_form" action="/editAddress/<%=addressDetail._id%>" method="post" novalidate="novalidate">
+                                                      <div class="d-flex">
+                                                        <div class="col-md-6 form-group p_star pt-2">
+                                                          <label for="fullname" class="text-dark">Full Name</label>
+                                                          <input type="text" class="form-control border shadow" id="first" name="fullName" value="<%=addressDetail.fullName%>">
+                                                      </div>
+                                                     
+                                                      <div class="col-md-6 form-group p_star pt-2">
+                                                          <label for="phoneNumber" class="text-dark">Phone Number</label>
+                                                          <input type="text" class="form-control border shadow" id="number" name="phoneNumber"  value="<%=addressDetail.phoneNumber%>">
+                                                      
+                                                      </div>
+                                                      </div>
+                                                      
+                                                     <div class="d-flex"> <div class="col-md-6 form-group p_star pt-3">
+                                                      <select class="state_select border shadow" name="state">
+                                                          <option value="<%=addressDetail.state%>"><%=addressDetail.state%></option>
+                                                          
+                                                      </select>
+                                                  </div>
+                                                  <div class="col-md-6 form-group p_star pt-3">
+                                                      <select class="district_select border shadow" name="district">
+                                                          <option value="<%=addressDetail.district%>"><%=addressDetail.district%></option>
+                                                          
+                                                      </select>
+                                                  </div></div>
+                                                     <div class="d-flex">
+                                                      <div class="col-md-6 form-group p_star pt-3">
+                                                        <label for="city" class="text-dark">Town/City</label>
+                                                        <input type="text" class="form-control border shadow" id="city" name="city" value="<%=addressDetail.city%>">
+                                                    </div>
+                                                    <div class="col-md-6 form-group pt-3">
+                                                        <label for="pincode" class="text-dark">Pincode/ZIP</label>
+                                                        <input type="text" class="form-control border shadow" id="pincode" name="pincode" value="<%=addressDetail.pincode%>">
+                                                    </div>
+                                                     </div>
+                                                      <div class="col-md-12 form-group p_star pt-3">
+                                                          <label for="housename" class="text-dark">Full Address</label>
+                                                          <input type="text" class="form-control border shadow" id="houseName" name="houseName" value="<%=addressDetail.houseName%>">
+                                                      </div>
+                                                      <div class="col-md-12 form-group p_star pt-3">
+                                                          <label for="title" class="text-dark fs-5">Title for the Address</label>
+                                                          <input type="text" class="form-control border shadow" value="<%=addressDetail.title%>" id="title" name="title">
+                                                         
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button
+                                                          type="button"
+                                                          class="btn btn-secondary"
+                                                          data-dismiss="modal"
+                                                        >
+                                                          Close
+                                                        </button>
+                                                        <button type="submit" class="btn btn-success ">Submit</button>
+                                                      </div>
+                                                  </form>
+                                                    
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                           <%if(currentPath==='/profile/addAddress'){%>
+                                            
+                                           <%}else{%>
+                                            <td><a href="/checkOut?addressId=<%=addressDetail._id%>"><button class="btn btn-success btn-lg">Deliver Here</button></a></td>
+                                          <%}%>
+                                          <td><button class="btn btn-danger btn-lg" onclick="removeAddress('<%=addressDetail._id%>')" >Remove</button></td>
+                                            
+                                        </tr>
+                                      <%})%>
+                          </tbody>                          
+                        </table>
+                        <div class="d-flex justify-content-center">
+                          
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+      function removeAddress(addressId){
+    swal.fire({
+        title: 'Are you sure do you want to remove this Address?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, remove it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url:'/removeAddress',
+                method:'post',
+                data:{
+                    addressId:addressId
+                },
+                success:(response)=>{
+                    if(response.status){
+                        swal.fire({
+                            title: "Address removed",
+                            icon: "success",
+                            confirmButtonText: "OK",
+                        }).then(function () {
+                            location.reload();
+                        })
+                    }
+                }
+            });
+        }
+    });
+    
+}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%-include('../partials/userFooter')%>
+
+<%-include('../layout/userLayout2')%>

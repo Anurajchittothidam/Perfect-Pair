@@ -1,0 +1,224 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+<section class="content">
+  <div class="body_scroll">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <h2>Edit Product</h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12"></div>
+        <button class="btn btn-primary btn-icon mobile_menu" type="button">
+          <i class="zmdi zmdi-sort-amount-desc"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="d-flex justify-content-center fw-bold mb-5">Edit Product</h2>
+        <div id="error">
+          <% if (error){%>
+           <div  class="alert alert-danger d-flex justify-content-between align-items-center" role="alert"> <%= error %> 
+          <div class="close text-dark fs-5" style="cursor: pointer;" onclick="hideErrorMsg()">X</div>
+          </div>
+          <% } %>
+        </div>
+
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <% for (let i=0;i< 3; i++) { %>
+              <a data-toggle="modal" data-target="#editimage<%=product._id%><%= i %>" data-id="<%= product.image[i]._id%>"><img style="height: 6em; width: 8em" src="/<%= product.image[i].path %>" /></a>
+               <!-- modal EditImage -->
+              <div class="modal fade" id="editimage<%=product._id%><%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabeldelete" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabelLogout">
+                        Edit Image
+                      </h5>
+                    </div>
+                    <form action="/admin/editProduct/<%=product._id%>/<%=product.image[i]._id %>" method="post" enctype="multipart/form-data">
+                      <div class="modal-body">
+                          <img style="height: 10em; width:11em" src="/<%=product.image[i].path %>" alt="" >
+                        <p>Select the images of product?</p>
+                        <div class="form-group">
+                          <label class="col control-label" for="imagevalidator">images</label>
+                          <div class="col-lg-12">
+                            <input id="imagevalidator" required name="myFiles" class="input-file" type="file" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">
+                          Cancel
+                        </button>
+                        <button type="submit" class="btn btn-outline-dark">
+                          Edit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+        <form id="form" action="/admin/editProduct/<%=product._id%>" onsubmit="return submitform(event)"  method="post" >
+          <!-- 2 column grid layout with text inputs for the first and last names -->
+          <p id="alert" class="text-danger d-flex justify-content-center"></p>
+         
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input
+              type="text"
+              placeholder="Product name"
+              value="<%=product.name%>"
+              name="product_name"
+              id="product_name"
+              class="form-control"
+            />
+          </div>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input
+              type="number"
+              placeholder="Price"
+              value="<%=product.price%>"
+              name="price"
+              id="price"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input
+              type="text"
+              placeholder="Description"
+              value="<%=product.description%>"
+              name="description"
+              id="description"
+              class="form-control"
+            />
+          </div>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input
+              type="text"
+              placeholder="brandName"
+              value="<%=product.brand%>"
+              name="brand"
+              id="brand"
+              class="form-control"
+            />
+          </div>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input
+              type="number"
+              placeholder="Stock"
+              value="<%=product.stock%>"
+              name="stock"
+              id="stock"
+              class="form-control"
+            />
+          </div>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input type="text" value="<%=product?.category?.category_name%>" name="<%=product.category._id%>" disabled>
+            <select
+              class="form-select btn btn-light required"
+              name="category"
+              id="category-select"
+              aria-label="Default select example"
+            >
+              <option  value="<%=product.category._id%>" >Select</option>
+             <% categories.forEach(category=>{%>
+                <option value="<%=category._id%>">
+                    <%=category.category_name%>
+                  </option>
+             <%})%>
+             
+            </select>
+          </div>
+          <div class="form-outline flex-fill mb-0 mt-4">
+            <input type="text" value="<%=product?.subCategory?.subCategory_name%>" disabled>
+            <select
+              class="form-select btn btn-light required"
+              name="subCategory"
+              id="subCategory-select"
+            value=""
+            ><option value="<%=product.subCategory._id%>">subCategories</option></select>
+          </div>
+
+          <div class="row p-2 mt-5 mb-2">
+            <div class="col-md-12 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success sub-btn btn-lg">
+                Edit Product
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  function form_submit() {
+    document.querySelector("form").submit();
+  }
+</script>
+<script src="/javascript/editProduct.js"></script>
+<script>
+    document.querySelector('#category-select').addEventListener("change",function(){
+        const selectedCategory = this.value;
+        const requestOptions = {
+          method :"POST",
+          headers:{
+            'Content-type':'application/json'                                                        
+          },body:JSON.stringify(
+            {
+              category:selectedCategory,
+            }
+          )
+        }
+        fetch('/admin/getSubCategories',requestOptions).then((res)=>res.json())
+        .then(subcategories =>{
+          let subcategoryList = document.querySelector('#subCategory-select');
+          subcategoryList.innerHTML = "";
+          subcategories.forEach(subcategory => {
+            const option = document.createElement('option');
+            option.value = subcategory._id;
+            option.textContent = subcategory.subCategory_name;
+            subcategoryList.appendChild(option)
+          });
+        }).catch((err)=>{
+          console.log("subcategory managment error" );
+         
+        })
+    })
+  </script>
+  <script>
+    document.querySelector("#imagevalidator").addEventListener("change", function () {
+      let fileCount = 0;
+      let maxFiles = 1;
+          // Loop through the selected files and check their types
+          for (let i = 0; i < this.files.length; i++) {
+              let fileType = this.files[i].type;
+              if (fileType != "image/jpeg" && fileType != "image/jpg" && fileType != "image/png" && fileType != "image/webp") {
+                  this.value = "";
+                  Swal.fire({
+                      title: "Invalid Fileformat",
+                      icon: "error",
+                      confirmButtonText: "continue"
+                  });
+                  return;
+              }
+              // Increment the file count if the file is an image
+              fileCount++;
+              // Check if the maximum number of files has been reached
+          }
+          if (fileCount != 1) {
+                  this.value = "";
+                  Swal.fire({
+                      title: "You should upload only 1 images",
+                      icon: "error",
+                      confirmButtonText: "continue"
+                  })
+                  return;
+              }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<%-include('../layout/adminLayout2')%>

@@ -1,0 +1,378 @@
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="cupon_area">
+                <div class="check_title">
+                    <h2>Have a coupon? </h2>
+                </div>
+                <input type="text" id="coupon-inp" placeholder="Enter coupon code">
+                <input type="text" hidden name="coupon" value="flat5" id="coupon-hidd">
+                <a class="tp_btn border btn-light btn" id="coupon-btn" >Apply Coupon</a>
+            </div>
+        <form id="placeOrder">
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Billing Details</h3>
+                        <% if(addressDetails){%>
+                            <h5 class="text-secondary">Deliver To: <span class="text-dark border bg-light"> <%=addressDetails.addressDetails[0].title%></span></h5>
+                            <form class="row contact_form pt-2" novalidate="novalidate">
+                                <div class="d-flex pt-2">
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="hidden" class="form-control" id="first" name="fullName" value="<%= addressDetails.addressDetails[0].fullName %>">
+                                        <input type="text" class="form-control" id="first" name="fullName" value="<%= addressDetails.addressDetails[0].fullName %>" disabled>
+                                    </div>
+                                   
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="hidden" class="form-control" id="number" name="phoneNumber" value="<%=addressDetails.addressDetails[0].phoneNumber%>" name="number" >
+                                        <input type="text" class="form-control" id="number" name="phoneNumber" value="<%=addressDetails.addressDetails[0].phoneNumber%>" name="number" disabled>
+                                    </div>
+                                </div>
+                                
+                               <div class="d-flex">
+                                <div class="col-md-6 form-group p_star ">
+                                    <select class="state_select" name="state">
+                                        <option  selected disabled><%=addressDetails.addressDetails[0].state%></option>
+                                    </select>
+                                    
+                                </div>
+                                <div hidden><select hidden class="state_select" name="state">
+                                    <option  selected ><%=addressDetails.addressDetails[0].state%></option>
+                                </select></div>
+                                <div class="col-md-6 form-group p_star">
+                                    <select class="district_select" name="district">
+                                        <option  selected disabled><%=addressDetails.addressDetails[0].district%></option>
+                                    </select>
+                                </div>
+                                <div hidden>
+                                    <select  class="district_select" name="district">
+                                        <option  selected ><%=addressDetails.addressDetails[0].district%></option>
+                                    </select>
+                                </div>
+                               </div>
+                               <div class="d-flex">
+                                <div class="col-md-6 form-group p_star">
+                                    <input type="hidden" class="form-control" id="city" value="<%=addressDetails.addressDetails[0].city%>" name="city" >
+                                    <input type="text" class="form-control" id="city" value="<%=addressDetails.addressDetails[0].city%>" name="city" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="hidden" class="form-control" id="zip" value="<%=addressDetails.addressDetails[0].pincode%>"  name="pincode" >
+                                    <input type="text" class="form-control" id="zip" value="<%=addressDetails.addressDetails[0].pincode%>" disabled name="pincode" >
+                                </div>
+                               </div>
+                                
+                                <div class="col-md-12 form-group p_star pt-3">
+                                    <input type="hidden" class="form-control" value="<%=addressDetails.addressDetails[0].houseName%>" id="add1" name="houseName">
+                                    <input type="text" class="form-control" value="<%=addressDetails.addressDetails[0].houseName%>" disabled id="add1" name="houseName">
+                                </div>
+
+                            <div class="col-md-12 form-group pt-4">
+                                <div class="creat_account">
+                                    <label for="f-option3 text-dark">Ship to a different address?</label>
+                                    <a href="/addAddress"><button type="button" class="btn btn-secondary btn-sm">Change</button></a>
+                                </div>
+                            </div>
+                        <%}else{%>
+                            <form class="row contact_form" action="/addAddress" method="post" novalidate="novalidate">
+                                <div class="d-flex">
+                                    <div class="col-md-6 form-group p_star pt-2">
+                                        <label for="fullname" class="text-dark">Full Name</label>
+                                        <input type="text" class="form-control border shadow" id="first" name="fullname"  placeholder="Full Name">
+                                    </div>
+                                   
+                                    <div class="col-md-6 form-group p_star pt-2">
+                                        <label for="phoneNumber" class="text-dark">Phone Number</label>
+                                        <input type="text" class="form-control border shadow" id="number" name="phoneNumber"  placeholder="Phone Number">
+                                    
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-md-6 form-group p_star pt-3">
+                                        <select class="state_select border shadow" name="state">
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="TamilNadu">TamilNadu</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group p_star pt-3">
+                                        <select class="district_select border shadow" name="district">
+                                            <option value="Wayanad">Wayanad</option>
+                                            <option value="Kannur">Kannur</option>
+                                            <option value="Kozhikode">Kozhikode</option>
+                                            <option value="Malappuram">Malappuram</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-md-6 form-group p_star pt-3">
+                                        <label for="city" class="text-dark">Town/City</label>
+                                        <input type="text" class="form-control border shadow" id="city" name="city"  placeholder="City/Town">
+                                    </div>
+                                    <div class="col-md-6 form-group pt-3">
+                                        <label for="pincode" class="text-dark">Pincode/ZIP</label>
+                                        <input type="text" class="form-control border shadow" id="pincode" name="pincode" placeholder="Pincode/ZIP">
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-12 form-group p_star pt-3">
+                                    <label for="housename" class="text-dark">Full Address</label>
+                                    <input type="text" class="form-control border shadow" id="houseName" name="houseName" placeholder="Full Address">
+                                </div>
+                                <div class="col-md-12 form-group p_star pt-3">
+                                    <label for="title" class="text-dark fs-5">Title for the Address</label>
+                                    <input type="text" class="form-control border shadow" placeholder="eg.Home" id="title" name="title">
+                                   
+                                </div>
+                                <div class="col-lg-12 d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn btn-success ">Submit</button>
+                                </div>
+                            </form>
+                        <%}%>
+                    </div>
+                    <div class="col-lg-4 mt-5">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li><a href="#">Product <span>Total</span></a></li>
+                               <% cartData.forEach((product)=>{%>
+                                    <li class="d-flex justify-content-between align-items-center"><p  style="width: 12rem;" ><%=product.name%></p><span class="middle" >x<%if(product.quantity<10) { %> 
+                                        0<%=product.quantity%>
+                                    <%}else{%>
+                                        <%=product.quantity%>
+                                    <%}%></span> <span class="last">₹<%=product.productPrice%></span></li>
+                                <%})%>
+                            </ul>
+                            <ul class="list list_2">
+                                <li><a href="#">Subtotal <span>₹<%=sum%></span></a></li>
+                                <% if(sum<1000) { %>
+                                    <li><a href="#">Shipping <span>₹40</span></a></li>
+                                    <small class="text-danger pl-1">shop for 1000 or more to get free delivery</small>
+                                    <li><a href="#">Total <span class="delivery">₹<%=sum+40%></span></a></li>
+                                    <input type="text" hidden class="deliveryInp" name="total" value="<%=sum+40%>">
+                                <%}else{%>
+                                    <li><a href="#">Shipping <span>₹0(free delivery)</span></a></li>
+                                    <li><a href="#">Total <span class="total">₹<%=sum%></span></a></li>
+                                    <input type="text" hidden class="totalInp" name="total" value="<%=sum%>">
+                                <%}%>
+                                    
+                            </ul>
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option5" value="COD" name="paymentMethod">
+                                    <label for="f-option5">Cash On Delivery</label>
+                                    <div class="check"></div>
+                                </div>
+                              
+                            </div>
+                            <div class="payment_item active">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option6" value="Online" required name="paymentMethod">
+                                    <label for="f-option6">Online Payment</label>
+                                    <img src="img/product/card.jpg" alt="">
+                                    <div class="check"></div>
+                                </div>
+                             
+                            </div>
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option4" name="selector">
+                                <label for="f-option4">I’ve read and accept the </label>
+                                <a href="#">terms & conditions*</a>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button class="primary-btn border-0" type="submit" value="submit" id="rzp-button1"  >Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+<script>
+  const myInput = document.getElementById('coupon-inp');
+  const myButton = document.getElementById('coupon-btn');
+  myButton.addEventListener('click', function() {
+    if(myButton.innerText.includes("CANCEL")) {
+    location.reload();
+  } else {
+    verifyCoupon(myInput.value);
+  }
+});
+const placeOrder=document.getElementById('placeOrder')
+placeOrder.addEventListener('submit',((e) => {
+			e.preventDefault();
+			$.ajax({
+				url: '/placeOrder',
+				method: 'post',
+				data: $('#placeOrder').serialize(),
+				success: (response) => {
+					if (response.success) {
+                        const orderId=response.orderId
+						location.href = `/orderSuccess/${orderId}`;
+					} else {
+                        
+						razorPay(response.order);
+					}
+				}
+			})
+		}))
+
+        function razorPay(order){
+        let options = {
+    "key": "rzp_test_C9wxWLMGa68zo1", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Perfect Pair",
+    "description": "Test Transaction",
+    "image": "../images/logo shoe.png",
+    "order_id": order.id,//This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+       verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": "Perfect Pair",
+        "email": "perfectpairshoes2023@gmail.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+let rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+       location.href='/paymentFailed'
+});
+    rzp1.open();
+}
+
+
+function verifyPayment(payment, order) {
+			$.ajax({
+				url: "/verifyPayment",
+				data: {
+					payment,
+					order,
+				},
+				method: "post",
+				success: (response) => {
+					if (response.success) {
+                        const orderId=response.orderId
+						location.href = `/orderSuccess/${orderId}`;
+					} else {
+						location.href = "/paymentFail";
+					}
+				},
+			});
+		}
+  function verifyCoupon(couponName){
+    $.ajax({
+        url:'/verifyCoupon',
+        method:'post',
+        data:{
+            name:couponName
+        },
+        success:(response)=>{
+            if(response.couponExist===false){
+                        Swal.fire({
+							title: "Invalid Coupon!",
+							icon: "error",
+							confirmButtonText: "continue",
+						}).then(function () {
+							location.reload()
+						});
+            }else if(response.alredy===true){
+                Swal.fire({
+							title: "Coupon already used!",
+							icon: "error",
+							confirmButtonText: "continue",
+						}).then(function () {
+							location.reload()
+						});
+            }
+            else if(response.couponDelete===true){
+                Swal.fire({
+							title: "Coupon no longer exist!",
+							icon: "error",
+							confirmButtonText: "continue",
+						}).then(function () {
+							location.reload()
+						});
+            }else if(response.couponExpired===true){
+                Swal.fire({
+							title: "Coupon no longer exist!",
+							icon: "error",
+							confirmButtonText: "continue",
+						}).then(function () {
+							location.reload()
+						});
+            }else if(response.lessThan===true){
+                const minLimit=response.minLimit
+                Swal.fire({
+							title: `Purchase for alteast ${minLimit} Rs for applying this coupon.`,
+							icon: "error",
+							confirmButtonText: "continue",
+						}).then(function () {
+							location.reload()
+						});
+            }else if(response.status){
+                const delivery=document.querySelector('.delivery')
+                const deliveryInp=document.querySelector('.deliveryInp')
+                const totalSpan=document.querySelector('.total')
+                const totalSpanInp=document.querySelector('.totalInp')
+                const total=response.total
+               if(totalSpan){
+                totalSpanInp.value=total
+                totalSpan.innerHTML=total
+                totalSpan.style.color="red"
+               }else{
+                deliveryInp.value=total+40
+                delivery.innerHTML=total+40
+                delivery.style.color="red"
+               }
+                Swal.fire({
+							title: "Coupon applied successfully",
+							icon: "success",
+							confirmButtonText: "continue",
+				})
+                // coupon.value=myInput.value
+                myInput.disabled=true
+                myButton.innerText="Cancel"
+                
+            }
+        }
+    })
+  }
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <%-include('../partials/userFooter')%>
+
+    <%-include('../layout/userLayout2')%>

@@ -1,0 +1,85 @@
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Wishlist</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/wishlist">wishlist</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <%if(locals.countInWishList!==0){%>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Add To Cart</th>
+                                    <th scope="col">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% wishlistData.forEach(product=>{%>
+                                    <tr>
+                                        
+                                        <td>
+                                            <div class="media">
+                                                <a href="/product-detailed/<%=product._id%>">
+                                                <div class="d-flex" >
+                                                    <img src="/<%=product.image[0]%>" style="width: 10em;height:10em;object-fit:contain; " alt="">
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p style="font-size:20px;"><%=product.name%></p>
+                                        </td>
+                                        <td>
+                                            <h5><%=product.price%></h5>
+                                        </td>
+                                        <td><button class="btn btn-primary " onclick="addToCart('<%=product._id%>','<%=product.size%>')">Add To Cart</button></td>
+                                        <td> <button class="btn btn-danger btn-lg" onclick="removeFromWishList('<%=product.wishlistId%>','<%=product._id%>')" >Remove</button> </td>
+                                    </tr>
+                                <%})%>
+                            </tbody>
+                        </table>
+                    </div>
+                <%}else{%>
+                    <div class=" d-flex justify-content-center   ">
+                        <img
+                        src="/images/shopping-cart-6396865-5299561-unscreen.gif"
+                        
+                        id="imageCart" 
+                        class="img-fluid rounded mx-auto d-block "
+                        alt="image"
+                        />
+                      
+                      </div>
+                        <h2 class="text-center text-black">Oops!<br>
+                          Your Wishlist is empty </i><br>
+                          <a class="btn btn-primary mt-5 mb-5" href="/shop">Back to shop</a>
+                        </div>
+               <%}%>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+	<script src="/js/ajaxRequest.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <%-include('../partials/userFooter')%>
+
+    <%-include('../layout/userLayout2')%>

@@ -1,0 +1,159 @@
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Confirmation</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="category.html">Confirmation</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Order Details Area =================-->
+	<section class="order_details section_gap">
+		<div class="container">
+			<%if (currentPath==='/orderDetailed/:id'){%>
+				<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+			<%}else{%>
+				
+			<%}%>
+			<div class="row order_d_inner">
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Order Info</h4>
+						<ul class="list">
+							<li><a href="#"><span>Order Id</span><%=orderDetailed._id%></a></li>
+							<li><a href="#"><span>Date</span><%=orderDetailed.orderDate%></a></li>
+							<li><a href="#"><span>Total</span><%=orderDetailed.totalAmount%></a></li>
+							<li><a href="#"><span>Payment method</span><%=orderDetailed.paymentMethod%></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Shipping Address</h4>
+						<ul class="list">
+							<li><a href="#"><span>Address</span><%=orderDetailed.houseName%></a></li>
+							<li><a href="#"><span>City</span><%=orderDetailed.district%></a></li>
+							<li><a href="#"><span>Country</span><%=orderDetailed.state%></a></li>
+							<li><a href="#"><span>Postcode </span><%=orderDetailed.pincode%></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="details_item  mt-4">
+						<h4></h4>
+						<ul class="list">
+							<li><a href="#"><span>Name</span><%=orderDetailed.name%></a></li>
+							<li><a href="#"><span>phoneNumber</span><%=orderDetailed.phoneNumber%></a></li>
+							<li><a href="#"><span>Order Staus</span><%=orderDetailed.orderStatus%></a></li>
+							<li><a href="#"><span>Delivery Date</span><%=orderDetailed.deliveryDate%></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="order_details_table">
+				<h2>Order Details</h2>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Image</th>
+								<th scope="col">Product</th>
+								<th scope="col">Size</th>
+								<th scope="col">Quantity</th>
+								<th scope="col">Price</th>
+								<th scope="col">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% orderData.forEach(order=>{%>
+								<tr >
+									<td >
+										<img src="/<%=order.image[0]%>"  style="width: 10em;height:10em;object-fit:contain; " alt="">
+									</td>
+									<td class="pt-5">
+										<p><%=order.name%></p>
+									</td>
+									<td class="pt-5">
+										<p><%=order.size%></p>
+									</td>
+									<td class="pt-5">
+										<p>x <%=order.quantity%></p>
+									</td>
+									<td class="pt-5">
+										<p><%=order.price%></p>
+									</td>
+									<td class="pt-5 text-dark">
+										<h5><%=order.productPrice%></h5>
+									</td>
+								</tr>
+								<%})%>
+						
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<h4>Subtotal</h4>
+								</td>
+								
+								<td>
+									<p><%=sum%></p>
+								</td>
+							</tr> 
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<% if(sum<1000) { %>
+								<td>
+									<h4>Shipping</h4>
+								</td>
+								<td>
+									<p>₹40</p>
+								</td>
+                                <%}else{%>
+									<td>
+										<h4>Shipping</h4>
+									</td>
+									<td>
+										<p>₹0(free delivery)</p>
+									</td>
+                                <%}%>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<h4>Total</h4>
+								</td>
+								
+								<td>
+									<p class="text-danger" style="font-size:20px;"><%=orderDetailed.totalAmount%></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Order Details Area =================-->
+
+
+	<%-include('../partials/userFooter')%>
+
+	<%-include('../layout/userLayout2')%>

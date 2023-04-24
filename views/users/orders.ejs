@@ -1,0 +1,111 @@
+
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+  <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>My Orders</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                       
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <% if(orderData.length > 0){%>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col" style="padding-left:2rem;">Price</th>
+                                    <th scope="col" style="padding-left:2rem;">Size</th>
+                                    <th scope="col" style="padding-left:2rem;">Quantity</th>
+                                    <th scope="col" style="padding-left:2rem;">Total</th>
+                                    <th scope="col" style="padding-left:2rem;">Order Status</th>
+                                    <th scope="col" style="padding-left:2rem;">Payment Status</th>
+                                    <th scope="col" style="padding-left:2rem;">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <% orderData.forEach((order)=>{%>
+                                    <tr>
+                                        <td>
+                                            <div class="media">
+                                                <a href="/orderDetailed/<%=order._id%>">
+                                                <div class="d-flex">
+                                                    <img src="/<%=order.image[0]%>"  style="width: 10em;height:10em;object-fit:contain; " alt="">
+                                                </div>
+                                            </a>
+                                                <div class="media-body">
+                                                    <p><%=order.name%></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="padding-left:2rem;">
+                                            <h5 id="sum"><span>&#8377</span><%=order.price%></h5>
+                                        </td>
+                                        <td style="padding-left:2rem;">
+                                            <h5><%=order.size%></h5>
+                                        </td>
+                                       <td style="padding-left:2rem;">
+                                        <h5><%=order.quantity%></h5>
+                                       </td>
+                                       
+                                        <td style="padding-left:2rem;">
+                                            <h5><span>&#8377</span><%=order.totalAmount%></h5>
+                                        </td>
+                                        <td style="padding-left:2rem;">
+                                            <h5><%=order.orderStatus%></h5>
+                                        </td>
+                                        <td style="padding-left:2rem;">
+                                            <h5><%=order.paymentStatus%></h5>
+                                        </td>
+                                        <%if(order.orderStatus!=="Cancelled"){%>
+                                        <td style="padding-left:2rem;"><button class="btn btn-danger btn-sm" onclick="cancelOrder('<%=order._id%>')">Cancel</button></td>
+                                        <%}else{%>
+                                        <td style="padding-left:2rem;">
+                                        <h5><%=order.orderStatus%></h5>
+                                        </td>
+                                        <%}%>
+                                    </tr>
+                                    <%})%>
+                             
+                            </tbody>
+                        </table>
+                    </div>
+                <%}else{%>
+                    <div class=" d-flex justify-content-center   ">
+                        <img
+                        src="/images/shopping-cart-6396865-5299561-unscreen.gif"
+                        
+                        id="imageCart" 
+                        class="img-fluid rounded mx-auto d-block "
+                        alt="image"
+                        />
+                      
+                      </div>
+                        <h2 class="text-center text-black">Oops!<br>
+                          No Orders Found</i><br>
+                          <a class="btn btn-primary mt-5 mb-5" href="/shop">Back to shop</a>
+                        </div>
+                <%}%>
+                
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+    <script src="/js/ajaxRequest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <%-include('../partials/userFooter')%>
+
+    <%-include('../layout/userLayout2')%>

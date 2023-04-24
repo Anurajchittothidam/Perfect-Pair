@@ -1,0 +1,307 @@
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Product Details Page</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="single-product.html">product-details</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="s_Product_carousel bg-secondary " style="width:35rem;height:40rem;">
+							<div class="single-prd-item d-flex align-items-center magnify_area" >
+								<img class="img-fluid magnify_img target" style="width:30rem;margin-top: 120px;" src="/<%=product.image[0].path%>" alt="">
+							</div>
+						<div class="single-prd-item d-flex align-items-center magnify_area">
+							<img class="img-fluid magnify_img" style="margin-top:120px;" src="/<%=product.image[1].path%>" alt="">
+						</div>
+						<div class="single-prd-item d-flex align-items-center magnify_area">
+							<img class="img-fluid magnify_img" style="margin-top:120px;" src="/<%=product.image[2].path%>" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3><%=product.name%></h3>
+						<h2><span>&#8377</span><%=product.price%></h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Category</span> : <%=product.category.category_name%></a></li>
+                            <%if(product.stock>0){%>
+                                <li><a href="#" style="color:green;"><span>Availibility</span> : In Stock</a></li>
+                            <%}else{%>
+                                <li><a href="#" style="color: red;"><span>Availibility</span> : Out Of Stock</a></li>
+                            <%}%>
+							
+						</ul>
+						<label class="radio p-2">
+							<span>
+							  <%= product.size %>
+							</span> <br>
+							<input type="radio" name="size" value="<%= product.size %>" checked />
+						</label>
+						<p><%=product.description%></p>
+					
+						<div class="card_area d-flex align-items-center">
+							<a class="primary-btn" onclick="addToCart('<%=product._id%>','<%=product.size%>')" href="#">Add to Cart</a>
+							<a class="icon_btn" onclick="addToWishList('<%=product._id%>')" href="#"><i class="lnr lnr lnr-heart"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+					 aria-selected="false">Specification</a>
+				</li>
+				
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p><%=product.description%></p>
+					<p></p>
+				</div>
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<h5>Width</h5>
+									</td>
+									<td>
+										<h5>128mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Height</h5>
+									</td>
+									<td>
+										<h5>508mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Depth</h5>
+									</td>
+									<td>
+										<h5>85mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Weight</h5>
+									</td>
+									<td>
+										<h5>52gm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Quality checking</h5>
+									</td>
+									<td>
+										<h5>yes</h5>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>
+										<h5>When packeting</h5>
+									</td>
+									<td>
+										<h5>Without touch of hand</h5>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+	<section class="owl-carousel active-product-area section_gap">
+		<!-- single product slide -->
+		
+			<div class="single-product-slider">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-6 text-center">
+							<div class="section-title">
+								<h1>Similar Products</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore
+									magna aliqua.</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<% similar.slice(0,4).forEach(products=>{%>
+						<!-- single product -->
+						<div class="col-lg-3 col-md-6">
+							<div class="single-product">
+								<a href="/product-detailed/<%=products._id%>"><div class="d-flex align-items-center" style="height: 20em;">
+									<img class="img-fluid" src="/<%=products.image[0].path%>" alt="">
+								</div></a>
+								<div class="product-details">
+									<h6><%=products.name%></h6>
+									<div class="price">
+										<h6><span>&#8377</span><%=products.price%></h6>
+										<!-- <h6 class="l-through">2100.00</h6> -->
+									</div>
+									<div class="prd-bottom d-flex justify-content-evenly">
+	
+										<a href="" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">add to Cart</p>
+										</a>
+										<!-- <a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a> -->
+										<a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info ${wishlistProductIds.includes(products._id.toString()) ? 'wishlist-active' : ''}">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										  </a>
+										  
+									</div>
+								</div>
+							</div>
+						</div>	
+						<%})%> 	
+					</div>
+				</div>
+			</div> 
+			<!-- single product slide -->
+			<div class="single-product-slider">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-6 text-center">
+							<div class="section-title">
+								<h1>Similar Products</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore
+									magna aliqua.</p>
+							</div>
+						</div>
+					</div> 
+					 <div class="row">
+						<!-- single product -->
+						<% similar.slice(-4).forEach(products=>{%>
+							<!-- single product -->
+							<div class="col-lg-3 col-md-6">
+								<div class="single-product">
+									<a href="/product-detailed/<%=products._id%>"><div class="d-flex align-items-center" style="height: 20em;">
+										<img class="img-fluid" src="/<%=products.image[0].path%>" alt="">
+									</div></a>
+									<div class="product-details">
+										<h6><%=products.name%></h6>
+										<div class="price">
+											<h6><span>&#8377</span><%=products.price%></h6>
+											<!-- <h6 class="l-through">2100.00</h6> -->
+										</div>
+										<div class="prd-bottom">
+		
+											<a href="" class="social-info">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to Cart</p>
+											</a>
+										
+											<a href="#" onclick="addToWishList('<%= products._id %>')" class="social-info" >
+												<span class="lnr lnr-heart"></span>
+												<p class="hover-text">Wishlist</p>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>	
+						<%})%>
+					</div>
+				</div>
+			</div>
+	</section>
+
+	<script src="/js/ajaxRequest.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ <style>
+	.magnify_area {
+
+	  width: 100%;
+	  height: 100%;
+	  overflow: hidden;
+	}
+	
+	.magnify_img {
+	  display: block;
+	  max-width: 100%;
+	  min-height: 100%;
+	  transition: transform 0.2s ease-in-out;
+
+	}
+	
+	.magnify_area:hover .magnify_img {
+	  transform: scale(2);
+	}
+	
+	.magnify_area:not(:hover) .magnify_img {
+	  transition: transform 0.2s ease-in-out;
+	  transform: scale(1);
+	}
+  </style>
+
+ 
+	<script src="/js/mangnify_image.js"></script>
+    <%-include('../partials/userFooter')%>
+
+    <%-include('../layout/userLayout2')%>
+
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+
+
+
+
+
+
+
+	
+	
+
+
+   

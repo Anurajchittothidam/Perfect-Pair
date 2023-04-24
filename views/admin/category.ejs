@@ -1,0 +1,362 @@
+<%-include('../layout/adminLayout')%> <%-include('../partials/admin-sidebar')%>
+<!-- header  -->
+<section class="content">
+  <div class="body_scroll">
+    <div class="block-header">
+      <div class="row">
+        <div>
+          <h2>Categories</h2>
+        </div>
+        <div class="card text-center">
+          <div class="header">
+            <h2><strong>Category</strong> Mangement</h2>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-icon mobile_menu" type="button">
+          <i class="zmdi zmdi-sort-amount-desc"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-between pt-3">
+        <div>
+          <button
+            type="button"
+            class="btn btn-primary btn-lg btn-block mb-3"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Add Category
+          </button>
+        </div>
+        <!-- Modal starting -->
+
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="/admin/addCategory" id="form" method="post">
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label"
+                      >Category Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="name"
+                      id="categorySelect"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <h5>subCategories:</h5>
+                    <% subCategories.forEach(subCategories=>{%>
+                    <input
+                      type="checkbox"
+                      class="subCat"
+                      id="mycheckbox"
+                      name="subname"
+                      value="<%=subCategories._id%>"
+                    />
+                    <label for="mycheckbox" class="col-form-label"
+                      ><%=subCategories.subCategory_name%></label
+                    >
+                    <%})%>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" onclick=""  class="btn btn-primary">Add</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- table starting  -->
+        <div id="error">
+          <% if (message){%>
+            <div class="alert alert-warning" role="alert"><%= message %></div>
+            <% delete message %>
+            <%}%>
+        </div>
+        <table class="table">
+          <thead class="thead-dark text-center">
+            <tr>
+              <th scope="col">sl.No</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <% categories.forEach (categories=>{%>
+            <div id="<%=categories._id%>" class=""></div>
+            <tr>
+              <th scope="row"><%= index += 1 %></th>
+              <td><%=categories.category_name%></td>
+              <td>
+                <button type="submit" class="btn btn-success " id="category-select_<%=categories._id%>" value="<%=categories._id%>" data-toggle="modal" data-target="#editsubCategory<%=categories._id%>" >Edit subCategory</button>
+                  <div class="modal fade" id="editsubCategory<%=categories._id%>" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content text-left">
+                        <div class="modal-header">
+                          
+                          <h5 class="modal-title" id="editsubCategoryLabel">Edit subCategory</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body ">
+                          <form   action="/admin/editsubCat/<%=categories._id%>"  method="post">
+                            <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Category</label>
+                              <input type="text" name="name" class="form-control" value="<%=categories.category_name%>" disabled>
+                            </div>
+                            <div class="form-group">
+                              <label for="message-text" class="col-form-label">subCategories:</label>
+                              <br>
+                              <div id="subCategory_select">
+                                <% subCategories.forEach(subCategory=>{%>
+                                  <input
+                                    type="checkbox"
+                                    id="editCheckbox_<%=categories._id%>_<%=subCategory.subCategory_name%>"
+                                    name="subname"
+                                   value="<%=subCategory._id%>"
+                                  />
+                                  <label for="editcheckbox" class="col-form-label"
+                                    ><%=subCategory.subCategory_name%></label
+                                  >
+                                  <%})%>
+                              </div>
+                            </div>
+                          
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                      </form>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                 <button type="submit" class="btn btn-primary " id="category-Select_<%=categories._id%>" value="<%=categories._id%>" data-toggle="modal" data-target="#editCategory<%=categories._id%>" >Edit</button>
+                  <div class="modal fade" id="editCategory<%=categories._id%>" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content text-left">
+                        <div class="modal-header">
+                          
+                          <h5 class="modal-title" id="editCategoryLabel">Edit Category</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body ">
+                          <form   action="/admin/editCategory/<%=categories._id%>"  method="post">
+                            <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Category</label>
+                              <input type="text" name="name" class="form-control" value="<%=categories.category_name%>" >
+                            </div>
+                            <div class="form-group">
+                              <label for="message-text" class="col-form-label">subCategories:</label>
+                              <br>
+                              <div id="subCategory_select">
+                                <% subCategories.forEach(subCategory=>{%>
+                                  <input
+                                    type="checkbox"
+                                    id="editCheckBox_<%=categories._id%>_<%=subCategory.subCategory_name%>"
+                                    name="subname"
+                                   value="<%=subCategory._id%>"
+                                  />
+                                  <label for="editcheckbox" class="col-form-label"
+                                    ><%=subCategory.subCategory_name%></label
+                                  >
+                                  <%})%>
+                              </div>
+                            </div>
+                          
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                      </form>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              <td>
+                <% if(categories.delete===false){%>
+                <form
+                  action="/admin/deleteCategory/<%=categories._id%>"
+                  onsubmit="return submit(event)"
+                  method="post"
+                >
+                  <button
+                    class="btn btn-danger"
+                    type="submit"
+                    onclick="return deleteCategory('<%=categories._id%>')"
+                  >
+                    Delete
+                  </button>
+                </form>
+                <%}else{%>
+                <form
+                  action="/admin/restoreCategory/<%=categories._id%>"
+                  onsubmit="return submit(event)"
+                  method="post"
+                >
+                  <button class="btn btn-success" type="submit">Restore</button>
+                </form>
+                <% }%>
+              </td>
+            </tr>
+            <%}) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  function deleteCategory(id) {
+    if (confirm("Are you shure do you want to delete this category")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+</script>
+
+
+<script>
+  '<% categories.forEach((category) => { %>'
+  document.querySelector("#category-select_<%=category._id %>").addEventListener("click", function () {
+    const selectedCategory = this.value;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        category: selectedCategory,
+      }),
+    };
+    fetch("/admin/getSubCategories", requestOptions)
+      .then((res) => res.json())
+      .then((subcategories) => {
+         subcategories.forEach((subCategory) => { 
+          const checkbox = document.querySelector(`#editCheckbox_<%=category._id%>_${subCategory.subCategory_name}[value="${subCategory._id}"]`);
+          if (checkbox) {
+            checkbox.checked = true
+          }
+         }); 
+      })
+      .catch((err) => {
+        console.log("subcategory management error");
+      });
+  });
+'<% }); %>'
+</script>
+
+<script>
+  '<% categories.forEach((category) => { %>'
+  document.querySelector("#category-Select_<%=category._id %>").addEventListener("click", function () {
+    const selectedCategory = this.value;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        category: selectedCategory,
+      }),
+    };
+    fetch("/admin/getSubCategories", requestOptions)
+      .then((res) => res.json())
+      .then((subcategories) => {
+         subcategories.forEach((subCategory) => { 
+          const checkbox = document.querySelector(`#editCheckBox_<%=category._id%>_${subCategory.subCategory_name}[value="${subCategory._id}"]`);
+          if (checkbox) {
+            checkbox.checked = true
+          }
+         }); 
+      })
+      .catch((err) => {
+        console.log("subcategory management error");
+      });
+  });
+'<% }); %>'
+</script>
+
+
+ <script> 
+  const errorMessage = document.querySelector("#error")
+  setTimeout(()=>{
+    errorMessage.innerHTML="";
+  },3000)
+  const form = document.querySelector("#form");
+  const input = document.querySelector("#categorySelect");
+  const sub =document.querySelector(".subCat")
+  form.addEventListener("submit", function (event) {
+    
+  
+    const value = input.value.trim();
+  
+    if (value === "") {
+      event.preventDefault(); // prevent the form from submitting
+      input.value = "";
+      Swal.fire({
+        title: "You should enter the Category name",
+        icon: "error",
+        confirmButtonText: "continue",
+      });
+    }
+    if (!sub.checked) {
+    event.preventDefault(); // prevent the form from submitting
+    sub.checked = false;
+    Swal.fire({
+      title: "You must select any subCategory",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  }
+  });
+  </script> 
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%-include('../layout/adminLayout2')%>

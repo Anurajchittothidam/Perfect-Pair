@@ -1,0 +1,68 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Users</h2>
+                    <ul class="breadcrumb">
+    
+                        <li class="breadcrumb-item active">Users</li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">                
+                    
+                </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <% if (message){%>
+            <div class="alert alert-warning"  role="alert"><%= message %>
+            </div>
+        <%}%>
+        <div class="container">
+            <div class="row justify-content-between text-center pt-3">
+               
+                
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">sl.No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% user.forEach (users=>{%>
+                            <div id="<%=users._id%>" class=""></div>
+                            <tr>
+                                <th scope="row"><%= index += 1 %>
+        
+        
+                                </th>
+                                <td><%=users.username%></td>
+                                <td><%=users.email %></td>
+                                <td>
+                                   <% if(users.isBlocked===false){%>
+                                        <form action="/admin/delete-user/<%=users._id%>" method="post">
+                                            <button type="submit" class="btn m-1 btn-danger">Block
+                                            </button>
+                                        </form>
+                                   <% }else{%>
+                                    <form action="/admin/restore-user/<%=users._id%>" method="post">
+                                        <button type="submit" class="btn m-1 btn-success">Unblock
+                                        </button>
+                                    </form>
+                                   <%}%>
+                                </td>
+                            </tr>
+                        <%}); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<%-include('../layout/adminLayout2')%>

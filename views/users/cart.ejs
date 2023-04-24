@@ -1,0 +1,157 @@
+
+<%-include('../layout/userLayout')%>
+<%-include('../partials/userHeader')%> 
+  <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <% if(locals.countInCart !==0){%>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col" style="padding-left:5rem;">Price</th>
+                                    <th scope="col" style="padding-left:5rem;">Size</th>
+                                    <th scope="col" style="padding-left:5rem;">Quantity</th>
+                                    <th scope="col" style="padding-left:5rem;">Total</th>
+                                    <th scope="col" style="padding-left:5rem;">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <% cartData.forEach((product)=>{%>
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="/<%=product.image[0]%>"  style="width: 10em;height:10em;object-fit:contain; " alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p><%=product.name%></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="padding-left:5rem;">
+                                        <h5 id="sum"><span>&#8377</span><%=product.price%></h5>
+                                    </td>
+                                    <td style="padding-left:5rem;">
+                                        <h5><%=product.size%></h5>
+                                    </td>
+                                    <td style="padding-left:5rem;">
+                                        <div class="product_count">
+                                            <input type="text" name="qty" id="<%=product._id%>" maxlength="12" value="<%=product.quantity%>" title="Quantity:"
+                                                class="input-text qty border">
+                                            <button onclick="changeQuantity('<%=product.cartId%>','<%=product._id%>','<%=product.size%>',1)"
+                                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up text-dark"></i></button>
+                                            <button onclick="changeQuantity('<%=product.cartId%>','<%=product._id%>','<%=product.size%>',-1)"
+                                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down text-dark"></i></button>
+                                        </div>
+                                      
+                                    </td>
+                                   
+                                    <td style="padding-left:5rem;">
+                                        <h5><span>&#8377</span><%=product.productPrice%></h5>
+                                    </td>
+                                    <td style="padding-left:5rem;"><button class="btn btn-danger btn-lg" onclick="removeFromCart('<%=product._id%>','<%=product.cartId%>','<%=product.size%>')">Remove</button></td>
+                                </tr>
+                               
+                               <% })%>
+                               
+                                 <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    
+                                    <td style="padding-left:5rem;"> <h5>Subtotal:</h5></td>
+                                    <td style="padding-left:5rem;">
+                                        <h5 id="subtotal"><span>&#8377</span><%=sum%></h5></td>
+                                </tr>
+                                <tr class="shipping_area">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h5>Shipping</h5>
+                                    </td>
+                                    <td>
+                                        
+                                        <p class="d-flex pl-1">
+                                            <span>Delivery</span>
+                                            <% if(locals.sum<1000) {%>
+                                        <strong class="text-dark pl-1">₹40</strong>
+                                        <small class="text-danger pl-1">shop for 1000 or more to get free delivery</small>
+                                        <% } else { %>
+                                            <strong class="text-dark pl-1">₹0(free delivery)</strong> 
+                                            
+                                          <%}%>
+                                        </p>
+                                        <hr>
+                                        <p class="d-flex total-price">
+                                            <span>Total</span>
+                                            <% if(locals.sum<1000) {%>
+                                        <strong class="text-dark pl-1">₹<%=sum+40%> </strong>
+                                        <% } else { %>
+                                            <strong id="netamount" class="text-dark pl-1">₹<%=sum%> </strong>
+                                            
+                                          <%}%>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr class="out_button_area">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="checkout_btn_inner d-flex align-items-center">
+                                            <a class="gray_btn" href="/shop">Continue Shopping</a>
+                                            <a class="primary-btn" href="/checkOut">Proceed to checkout</a>
+                                        </div>
+                                    </td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                    </div>
+                <%}else{%>
+                    <div class=" d-flex justify-content-center   ">
+                        <img
+                        src="/images/shopping-cart-6396865-5299561-unscreen.gif"
+                        
+                        id="imageCart" 
+                        class="img-fluid rounded mx-auto d-block "
+                        alt="image"
+                        />
+                      
+                      </div>
+                        <h2 class="text-center text-black">Oops!<br>
+                          Your Cart is empty </i><br>
+                          <a class="btn btn-primary mt-5 mb-5" href="/shop">Back to shop</a>
+                        </div>
+                <%}%>
+                
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+    <script src="/js/ajaxRequest.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <%-include('../partials/userFooter')%>
+
+    <%-include('../layout/userLayout2')%>

@@ -1,0 +1,22 @@
+<%-include('../layout/adminLayout')%>
+
+<div class="authentication">
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-lg-8 col-sm-12">
+                <div class="card">
+                    <img src="/images/404.svg" alt="404" />
+                </div>
+                <div class="btn btn-lg bg-transparent">
+                    <% if(currentPath==='/admin/error'){%>
+                        <a href="/admin/" class="btn btn-primary btn-block waves-effect waves-light">GO TO HOMEPAGE</a>                        
+                    <%}else{%>
+                        <a href="/" class="btn btn-primary btn-block waves-effect waves-light">GO TO HOMEPAGE</a>                        
+                     <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include('../layout/adminLayout2')%>

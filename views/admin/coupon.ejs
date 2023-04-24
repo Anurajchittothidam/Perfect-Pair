@@ -1,0 +1,159 @@
+<%-include('../layout/adminLayout')%> <%-include('../partials/admin-sidebar')%>
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Coupon</h2>
+                </div>
+                <div class="card  text-center">
+                    <div class="header">
+                      <h2><strong>Coupon</strong> Mangement</h2>
+                    </div>
+                  </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-between  pt-3">
+                <form action="/admin/addCoupon" method="post">
+                   <div class="d-flex flex-colomn">
+                        <div class="d-flex">
+                        <label for="" class="pt-2" style="width:10em;">Coupon Name :</label>
+                        <input type="text" class="form-control mt-2"   name="name" placeholder="Coupon Name">
+                       </div>
+                        <div class="d-flex ml-2">
+                            <label for="" class="pt-2" style="width:10em;">Discount :</label>
+                        <input type="number" class="form-control mt-2"   name="discount" placeholder="Discount">
+                        </div>   
+                    </div>
+                    <div class="d-flex flex-colomn">
+                        <div class="d-flex">
+                            <label for="" class="pt-2" style="width:10em;">MaxLimit :</label>
+                            <input type="number" class="form-control mt-2"   name="maxLimit" placeholder="Maximum Limit">
+                        </div>
+                        <div class="d-flex ml-2">
+                            <label for="" class="pt-2" style="width:10em;">MinLimit :</label>
+                            <input type="number" class="form-control mt-2"   name="minLimit" placeholder="Minimum Limit">
+                        </div>
+                        
+                    </div>
+                    <div class="d-flex">
+                        <label for="" class="pt-2" style="width:8rem;">Date Of Expiration :</label>
+                        <input type="date" class="form-control mt-2"   name="date" placeholder="Expiration Date">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit"  style="width: 5rem;" class="btn btn-primary btn-block mb-3">Submit</button>
+                    </div>
+                   </div>
+                </form>
+                </div>
+                
+              
+        <% if (message){%>
+            <div class="alert alert-warning" role="alert"><%= message %>
+            </div>
+        <%}%>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">sl.No</th>
+                            <th scope="col">Coupon Name</th>
+                            <th scope="col">discount</th>
+                            <th scope="col">maxLimit</th>
+                            <th scope="col">minLimit</th>
+                            <th scope="col">Expiration Time</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Restore/Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% coupons.forEach (coupon=>{%>
+                            
+                            <div id="<%=coupon._id%>" class=""></div>
+                            <tr>
+                                <th scope="row"><%= index += 1 %>
+        
+        
+                                </th>
+                                <td ><%=coupon.name%> </td>
+                                <td ><%=coupon.discount%> </td>
+                                <td ><%=coupon.maxLimit%> </td>
+                                <td ><%=coupon.minLimit%> </td>
+                                <td ><%=coupon.date%> </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary"  value="<%=coupon._id%>" data-toggle="modal" data-target="#editCoupon<%=coupon._id%>" >Edit</button>
+                  <div class="modal fade" id="editCoupon<%=coupon._id%>" tabindex="-1" role="dialog" aria-labelledby="editCouponLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content text-left">
+                        <div class="modal-header">
+                          
+                          <h5 class="modal-title" id="editCouponLabel">Edit Coupon</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body ">
+                          <form   action="/admin/editCoupon/<%=coupon._id%>"  method="post">
+                                <div class="d-flex">
+                                <label for="" class="pt-2" style="width:10em;">Coupon Name :</label>
+                                <input type="text" class="form-control mt-2" value="<%=coupon.name%>"  name="name">
+                             </div>
+                                <div class="d-flex ">
+                                    <label for="" class="pt-2" style="width:10em;">Discount :</label>
+                                <input type="number" class="form-control mt-2" value="<%=coupon.discount%>"   name="discount" >
+                               </div>   
+                                <div class="d-flex">
+                                    <label for="" class="pt-2" style="width:10em;">MaxLimit :</label>
+                                    <input type="number" class="form-control mt-2" value="<%=coupon.maxLimit%>"   name="maxLimit">                                </div>
+                                <div class="d-flex ">
+                                    <label for="" class="pt-2" style="width:10em;">MinLimit :</label>
+                                    <input type="number" class="form-control mt-2" value="<%=coupon.minLimit%>"   name="minLimit">                                </div>
+                            <div class="d-flex">
+                                <label for="" class="pt-2" style="width: 10em;">Date Of Expiration :</label>
+                                <input type="date" class="form-control mt-2"  value="<%=coupon.date%>"  name="date">
+                            </div>
+                           </div>
+                          
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                      </form>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+
+                                </td>
+                                <td>
+                                    <% if(coupon.delete===false){%>
+                                        <form action="/admin/deleteCoupon/<%=coupon._id%>" onsubmit="return submit(event)" method="post">
+                                        <button  type="submit" onclick="return deleteCoupon('<%=coupon._id%>')" class="btn m-1 btn-danger" >Delete</button></form>
+                                    <%}else{%>
+                                        <form action="/admin/restoreCoupon/<%=coupon._id%>" onsubmit="return submit(event)"  method="post">
+                                        <button  type="submit" class="btn m-1 btn-success" >Restore</button></form>
+                                    <%}%>
+                                    
+                                </td>
+                            </tr>
+                        <%}); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function deleteCoupon(id) {
+      if (confirm("Are you shure do you want to delete this category")) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+<%-include('../layout/adminLayout2')%>

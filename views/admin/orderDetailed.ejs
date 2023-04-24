@@ -1,0 +1,184 @@
+<%-include('../layout/adminLayout')%>
+<%-include('../partials/admin-sidebar')%>
+
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+				<div class="card text-center">
+					<div class="header">
+					  <h2><strong>Order  </strong>  Detailed</h2>
+					</div>
+				  </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">                
+                    
+                </div>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button> 
+            </div>
+        </div>
+        <!-- table order  -->
+          <div class="row clearfix">
+			<div class="col-lg-4">
+				<div><h4 class="pl-2">Order Info</h4>
+					
+							<div class="d-flex">
+			
+								<ul class="list">
+									<li  class="text-secondary p-1" style="font-size: 14px;" >Order Id</li>
+									<li  class="text-secondary p-1" style="font-size: 14px;">Date</li>
+									<li  class="text-secondary p-1" style="font-size: 14px;">Total</li>
+									<li  class="text-secondary p-1" style="font-size: 14px;">Payment method</li>
+								</ul>
+								<ul>
+									<li class="p-1" style="font-size: 14px;"><%=orderDetailed._id%></li>
+									<li class="p-1" style="font-size: 14px;"><%=orderDetailed.orderDate%></li>
+									<li class="p-1" style="font-size: 14px;"><%=orderDetailed.totalAmount%></li>
+									<li class="p-1" style="font-size: 14px;"><%=orderDetailed.paymentMethod%></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+				
+					<div class="col-lg-4">
+			
+				<h4 class="pl-2">Shipping Address</h4>
+				<div class="d-flex">
+				
+					<ul class="list">
+						<li class="text-secondary p-1" style="font-size: 14px;">Address</li>
+						<li class="text-secondary p-1" style="font-size: 14px;">City</li>
+						<li class="text-secondary p-1" style="font-size: 14px;">Country</li>
+						<li class="text-secondary p-1" style="font-size: 14px;">Postcode </li>
+					</ul>
+					<ul>
+						<li class="p-1" style="font-size: 14px;"><%=orderDetailed.houseName%></li>
+						<li class="p-1" style="font-size: 14px;"><%=orderDetailed.state%></li>
+						<li class="p-1" style="font-size: 14px;"><%=orderDetailed.state%></li>
+						<li class="p-1" style="font-size: 14px;"><%=orderDetailed.pincode%></li>
+					</ul>
+			</div>
+			</div>
+			
+					<div class="col-lg-4">
+						<h4></h4>
+						<div class="d-flex pt-5">
+							<ul class="list">
+								<li class="text-secondary p-1" style="font-size: 14px;">Name</li>
+								<li class="text-secondary p-1" style="font-size: 14px;">phoneNumber</li>
+								<li class="text-secondary p-1" style="font-size: 14px;">Order Staus</li>
+								<li class="text-secondary p-1" style="font-size: 14px;">Delivery Date</li>
+							</ul>
+							<ul>
+								<li class="p-1" style="font-size: 14px;"><%=orderDetailed.name%></li>
+								<li class="p-1" style="font-size: 14px;"><%=orderDetailed.phoneNumber%> </li>
+								<li class="p-1" style="font-size: 14px;"><%=orderDetailed.orderStatus%> </li>
+								<li class="p-1" style="font-size: 14px;"><%=orderDetailed.deliveryDate%></li>
+							</ul>	
+						</div>
+					</div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="card">
+                <div class="header d-flex">
+					
+						<div class="table-responsive">
+							<table class="table table-hover c_table">
+							  <thead>
+								<tr>
+									<th scope="col">Image</th>
+									<th scope="col">Product</th>
+									<th scope="col">Size</th>
+									<th scope="col">Quantity</th>
+									<th scope="col">Price</th>
+									<th scope="col">Total</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<% orderData.forEach(order=>{%>
+									<tr >
+										<td >
+											<img src="/<%=order.image[0]%>"  style="width: 10em;height:10em;object-fit:contain; " alt="">
+										</td>
+										<td class="pt-5">
+											<p><%=order.name%></p>
+										</td>
+										<td class="pt-5">
+											<p><%=order.size%></p>
+										</td>
+										<td class="pt-5">
+											<p>x <%=order.quantity%></p>
+										</td>
+										<td class="pt-5">
+											<p><%=order.price%></p>
+										</td>
+										<td class="pt-5">
+											<h5><%=order.productPrice%></h5>
+										</td>
+									</tr>
+									<%})%>
+							
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<p>Subtotal</p>
+									</td>
+									
+									<td>
+										<h5><%=sum%></h5>
+									</td>
+								</tr> 
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<% if(sum<1000) { %>
+									<td>
+										<p>Shipping</p>
+									</td>
+									<td>
+										<p>₹40</p>
+									</td>
+									<%}else{%>
+										<td>
+											<p>Shipping</p>
+										</td>
+										<td>
+											<p>₹0(free delivery)</p>
+										</td>
+									<%}%>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<h4 >Total</h4>
+									</td>
+									
+									<td>
+										<p class="text-danger" style="font-size:20px;"><%=orderDetailed.totalAmount%></p>
+									</td>
+								</tr>
+							</tbody>
+							</table>
+						  </div> 
+              </div>
+            </div>
+          </div>
+		</div>
+</section>
+	<style>
+		ul{
+			list-style-type: none;
+		}
+		h4{
+			margin-top: 0%;
+		}
+	</style>
+    <%-include('../layout/adminLayout2')%>
