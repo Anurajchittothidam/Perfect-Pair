@@ -175,7 +175,6 @@
 									<h6><%=products.name%></h6>
 									<div class="price">
 										<h6><span>&#8377</span><%=products.price%></h6>
-										<!-- <h6 class="l-through">2100.00</h6> -->
 									</div>
 									<div class="prd-bottom d-flex justify-content-evenly">
 	
@@ -183,10 +182,7 @@
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to Cart</p>
 										</a>
-										<!-- <a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a> -->
+										
 										<a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info ${wishlistProductIds.includes(products._id.toString()) ? 'wishlist-active' : ''}">
 											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>
@@ -226,7 +222,6 @@
 										<h6><%=products.name%></h6>
 										<div class="price">
 											<h6><span>&#8377</span><%=products.price%></h6>
-											<!-- <h6 class="l-through">2100.00</h6> -->
 										</div>
 										<div class="prd-bottom">
 		

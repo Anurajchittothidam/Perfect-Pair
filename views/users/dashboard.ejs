@@ -175,18 +175,14 @@
 									<h6><%=products.name%></h6>
 									<div class="price">
 										<h6><span>&#8377</span><%=products.price%></h6>
-										<!-- <h6 class="l-through">2100.00</h6> -->
 									</div>
 									<div class="prd-bottom d-flex justify-content-evenly">
 	
-										<a href="" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to Cart</p>
+										<a href="/product-detailed/<%=products._id%>" class="social-info">
+											<span class="lnr lnr-magnifier"></span>
+											<p class="hover-text">View more</p>
 										</a>
-										<!-- <a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a> -->
+										
 										<a href="#" onclick="addToWishList('<%=products._id%>')" class="social-info ${wishlistProductIds.includes(products._id.toString()) ? 'wishlist-active' : ''}">
 											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>
@@ -226,13 +222,12 @@
 										<h6><%=products.name%></h6>
 										<div class="price">
 											<h6><span>&#8377</span><%=products.price%></h6>
-											<!-- <h6 class="l-through">2100.00</h6> -->
 										</div>
 										<div class="prd-bottom">
 		
-											<a href="" class="social-info">
-												<span class="ti-bag"></span>
-												<p class="hover-text">add to Cart</p>
+											<a href="/product-detailed/<%=products._id%>" class="social-info">
+												<span class="lnr lnr-magnifier"></span>
+												<p class="hover-text">View more</p>
 											</a>
 										
 											<a href="#" onclick="addToWishList('<%= products._id %>')" class="social-info" >
@@ -256,19 +251,19 @@
 	<section class="brand-area section_gap">
 		<div class="container">
 			<div class="row">
-				<a class="col single-img" href="#">
+				<a class="col single-img" >
 					<img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="">
 				</a>
-				<a class="col single-img" href="#">
+				<a class="col single-img" >
 					<img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="">
 				</a>
-				<a class="col single-img" href="#">
+				<a class="col single-img" >
 					<img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="">
 				</a>
-				<a class="col single-img" href="#">
+				<a class="col single-img" >
 					<img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="">
 				</a>
-				<a class="col single-img" href="#">
+				<a class="col single-img" >
 					<img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="">
 				</a>
 			</div>
