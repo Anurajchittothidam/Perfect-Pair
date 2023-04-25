@@ -58,3 +58,8 @@ app.use((req, res, next) => {
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
+
+
+app.use((req, res) => {
+  res.status(404).render('users/error');
+});
