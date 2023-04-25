@@ -61,5 +61,6 @@ app.use('/admin', adminRouter);
 
 
 app.use((req, res) => {
-  res.status(404).render('users/error');
+  const currentPath=req.path
+  res.status(404).render('admin/error',{currentPath});
 });
