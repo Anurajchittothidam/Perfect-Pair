@@ -20,8 +20,9 @@ app.listen(PORT,()=>{
 mongoose.set('strictQuery', false)
 mongoose.connect(MONGODB_URI).then(()=>{
     console.log('mongodb connected');
-}).catch(()=>{
+}).catch((err)=>{
     console.log('Failed to connect');
+    console.log(err)
 })
 
 
