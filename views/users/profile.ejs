@@ -89,24 +89,26 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form class="row contact_form" action="/editProfile" method="post" novalidate="novalidate">
+                        <form id="form1" class="row contact_form" action="/editProfile" method="post" novalidate="novalidate">
                           <div class="d-flex">
                             <div class="col-md-6 form-group p_star pt-2">
                               <label for="fullname" class="text-dark">Full Name</label>
-                              <input type="text" class="form-control border shadow" id="first" name="fullName" value="<%=user.username%>">
+                              <input type="text" class="form-control border shadow" id="name" name="fullName" value="<%=user.username%>">
+                              <div class="errorElement" id="usernameError"></div>
                           </div>
                          
                           <div class="col-md-6 form-group p_star pt-2">
                               <label for="phoneNumber" class="text-dark">Phone Number</label>
-                              <input type="text" class="form-control border shadow" id="number" name="phoneNumber"  value="<%=user.phonenumber%>">
-                          
+                              <input type="text" class="form-control border shadow" id="phoneNumber" name="phoneNumber"  value="<%=user.phonenumber%>">
+                              <div class="errorElement" id="phoneError"></div>
                           </div>
                           </div>
                  
                             <div class="col-md-6 form-group p_star pt-2">
                                 <label for="phoneNumber" class="text-dark">Email</label>
-                                <input type="text" class="form-control border shadow" id="number" name="email"  value="<%=user.email%>">
-                                </div>
+                                <input type="text" class="form-control border shadow" id="email" name="email"  value="<%=user.email%>">
+                                <div class="errorElement" id="emailError"></div>
+                            </div>
                                
                           <div class="modal-footer mt-5">
                             <button
@@ -148,30 +150,32 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form class="row contact_form" action="/editPassword" method="post" novalidate="novalidate">
+                      <form id="form2" class="row contact_form" action="/editPassword" method="post" novalidate="novalidate">
                         <div class="d-flex">
                           <div class="col-md-6 form-group p_star pt-2">
                             <label for="fullname" class="text-dark">Full Name</label>
-                            <input type="text" class="form-control border shadow" id="first" name="fullName" value="<%=user.username%>">
+                            <input disabled type="text" class="form-control border shadow" id="username" name="fullName" value="<%=user.username%>">
                         </div>
                        
                         <div class="col-md-6 form-group p_star pt-2">
-                            <label for="phoneNumber" class="text-dark">Email</label>
-                            <input type="text" class="form-control border shadow" id="number" name="phoneNumber"  value="<%=user.phonenumber%>">
-                        
+                            <label for="phoneNumber" class="text-dark">Phone Number</label>
+                            <input disabled type="text" class="form-control border shadow" id="phonenumber" name="phoneNumber"  value="<%=user.phonenumber%>">
                         </div>
                         </div>
                         <div class="col-md-12 form-group p_star pt-3">
                             <label for="currentPassword" class="text-dark">CurrentPassword</label>
-                            <input type="text" class="form-control border shadow" id="number" name="currentPassword" placeholder="Enter the current Password">
+                            <input type="password" class="form-control border shadow" id="password" name="currentPassword" placeholder="Enter the current Password">
+                            <div class="errorElemnt" id="passwordError"></div>
                         </div>
                         <div class="d-flex"> <div class="col-md-6 form-group p_star pt-3">
-                            <label for="phoneNumber" class="text-dark">New Password</label>
-                            <input type="text" class="form-control border shadow" id="number" name="newPassword" placeholder="Enter the New Password">
+                            <label for="password" class="text-dark">New Password</label>
+                            <input type="password" class="form-control border shadow" id="newPassword" name="newPassword" placeholder="Enter the New Password">
+                            <div class="errorElement" id="passwordError"></div>
                         </div>
                         <div class="col-md-6 form-group p_star pt-3">
-                            <label for="phoneNumber" class="text-dark">Confirm Password</label>
-                            <input type="text" class="form-control border shadow" id="number" name="confirmPassword" placeholder="Confirm the passwor">
+                            <label for="password" class="text-dark">Confirm Password</label>
+                            <input type="password" class="form-control border shadow" id="confirmPassword" name="confirmPassword" placeholder="Confirm the passwor">
+                            <div class="errorElement" id="confimpasswordError"></div>
                         </div></div>
                              
                         <div class="modal-footer">
@@ -574,6 +578,8 @@ ul.summary-list > li:last-child  {
     margin-right: 0px;
 }
 </style>
+<!-- <script src="/javascript/editPassword.js"></script>
+<script src="/javascript/editProfile.js"></script> -->
 <script>
     const errorElement=document.getElementById('error')
     setTimeout(()=>{

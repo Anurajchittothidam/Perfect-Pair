@@ -41,9 +41,11 @@
 						<form class="row login_form" action="/login" method="post" onsubmit="return submitform(event)" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
 								<input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<div class="errorElement" id="emailError"></div>
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<div class="errorElement" id="passwordError"></div>
 							</div>
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
@@ -63,6 +65,7 @@
 	</section>
 	<!--================End Login Box Area =================-->
 
+	<script src="/javascript/userLogin.js"></script>
 	<script src="/js/ajaxRequest.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <%-include('../partials/userFooter')%>
